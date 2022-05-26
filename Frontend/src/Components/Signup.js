@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function Login() {
   const [first_name, setfirst_name] = useState("");
   const [last_name, setlast_name] = useState("");
-  const [username, setusername] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [re_password, setre_password] = useState("");
@@ -53,21 +53,6 @@ export default function Login() {
               </div>
 
               <div>
-                <label htmlFor="User-Name" className="sr-only">
-                  UserName
-                </label>
-                <input
-                  id="User-Name"
-                  name="userName"
-                  type="text"
-                  required
-                  onChange={(e) => setusername(e.target.value)}
-                  className="appearance-none relative block mb-4 w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="UserName"
-                />
-              </div>
-
-              <div>
                 <label htmlFor="email" className="sr-only">
                   Email address
                 </label>
@@ -77,6 +62,20 @@ export default function Login() {
                   type="email"
                   required
                   onChange={(e) => setemail(e.target.value)}
+                  className="appearance-none relative block mb-4 w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="email address"
+                />
+              </div>
+              <div>
+                <label htmlFor="PhoneNumber" className="sr-only">
+                  Phone Number
+                </label>
+                <input
+                  id="PhoneNumber"
+                  name="PhoneNumber"
+                  type="text"
+                  required
+                  onChange={(e) => setPhoneNumber(e.target.value)}
                   className="appearance-none relative block mb-4 w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="email address"
                 />
