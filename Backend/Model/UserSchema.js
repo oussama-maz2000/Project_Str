@@ -27,16 +27,19 @@ const UserScema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    minlength: [4, "your password should be great then 4 please"],
-    maxlength: [25, "your password should be less then 25 please"],
   },
-  passwordRestToken: String,
-  passwordRestExpires: Date,
   isactive: {
     type: Boolean,
     default: true,
     select: false,
   },
+  role: {
+    type: String,
+    enum: ["client", "user"],
+    default: "user",
+  },
+  passwordRestToken: String,
+  passwordRestExpires: Date,
 });
 
 const UserModel = mongoose.model("users", UserScema);
