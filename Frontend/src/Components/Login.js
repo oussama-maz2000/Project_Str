@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -16,6 +17,21 @@ export default function Login() {
             className="mt-8 space-y-6"
             onSubmit={(e) => {
               e.preventDefault();
+              new Promise((resolve, reject) => {
+                axios
+                  .post("/setname", {
+                    email: email,
+                    password: password,
+                  })
+                  .then((res) => {
+                    console.log(res);
+                    resolve();
+                  })
+                  .catch((err) => {
+                    console.log(err.response);
+                    reject();
+                  });
+              });
             }}
           >
             <input type="hidden" name="remember" defaultValue="true" />

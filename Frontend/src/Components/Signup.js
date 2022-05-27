@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function Login() {
   const [first_name, setfirst_name] = useState("");
@@ -19,6 +20,24 @@ export default function Login() {
             className="mt-8 space-y-6"
             onSubmit={(e) => {
               e.preventDefault();
+              new Promise((resolve, reject) => {
+                axios
+                  .post("/setname", {
+                    firstName: first_name,
+                    lastName: last_name,
+                    phoneNumber: phoneNumber,
+                    email: email,
+                    password: password,
+                  })
+                  .then((res) => {
+                    console.log(res);
+                    resolve();
+                  })
+                  .catch((err) => {
+                    console.log(err.response);
+                    reject();
+                  });
+              });
             }}
           >
             <div className="rounded-md  -space-y-px">
@@ -77,7 +96,7 @@ export default function Login() {
                   required
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   className="appearance-none relative block mb-4 w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="email address"
+                  placeholder="Phone Number"
                 />
               </div>
 

@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
 app.post("/setname", (req, res) => {
   console.log(req.body);
 });
-app.listen(3000, (req, res) => {
-  console.log("server run on 3001 😎");
+app.listen(5000, (req, res) => {
+  console.log("server run on 5000 😎");
 });
 app.use(GlobalErr);
