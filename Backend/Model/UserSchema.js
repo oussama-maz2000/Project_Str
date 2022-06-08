@@ -13,16 +13,14 @@ const UserScema = new mongoose.Schema({
     minlength: [4, "your lastname should be great then 4 please"],
     maxlength: [25, "your lastname should be less then 25 please"],
   },
-  phonenumber: {
-    type: Number,
-    required: true,
-    maxlength: 10,
-    minlength: 10,
-  },
   email: {
     type: String,
     required: true,
     unique: true,
+  },
+  phonenumber: {
+    type: String,
+    required: true,
   },
   password: {
     type: String,

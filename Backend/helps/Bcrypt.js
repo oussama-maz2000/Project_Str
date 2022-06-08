@@ -8,4 +8,4 @@ async function hashPassword(data) {
 async function compare(password, hashpassowrd) {
   return bcrypt.compare(password, hashPassword);
 }
-module.exports = { hashPassword };
+module.exports = { hashPassword,compare };
