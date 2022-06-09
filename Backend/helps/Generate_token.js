@@ -1,15 +1,25 @@
 require("dotenv").config();
-const token = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const SECRET = process.env.SECRET;
 
 const generate_token = (user, res) => {
-  const token = signToken(user);
+  const token = refreshToken(user);
+  res.status(200).json({
+    id: user._id,
+    token: token,
+  });
 };
 
-const signToken = (user) => {
-  const token = jwt.sign(
-    { firstname: user.firstname, role: user.role },
-    SECRET
+function refreshToken(user) {
+  var tkn;
+  jwt.sign(
+    { id: user._id, firstname: user.firstname, role: user.role, exp: 500 },
+    SECRET,
+    (err, token) => {
+      if (err) return err;
+      tkn = token;
+    }
   );
-  return token;
-};
+  console.log(tkn);
+}
+module.exports = { refreshToken };

@@ -4,7 +4,7 @@ const {
 } = require("../../Validations/UserValidation");
 const { hashPassword, compare } = require("../../helps/Bcrypt");
 const UserModel = require("../../Model/UserSchema");
-const jwt = require("jsonwebtoken");
+const { refreshToken } = require("../../helps/Generate_token");
 async function sign(req, res) {
   try {
     let { error } = await sign_validation_user(req.body);
@@ -14,26 +14,27 @@ async function sign(req, res) {
         err: error.details[0],
       });
 
-    let emailchek = await UserModel.findOne({ email: req.body.email });
+    let emailchek = await UserModel.findOne({ email: req.body.email }).lean();
     if (emailchek)
       return res
         .status(200)
         .json({ status: "failed", message: "email exist before" });
-    let user = await UserModel.create({
+    let user = new UserModel({
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       phonenumber: req.body.phonenumber,
       email: req.body.email,
       password: await hashPassword(req.body.password),
     });
-    //const token=jwt.sign()
 
     //  await user.save();
 
-    console.log(user);
+    const token =  refreshToken(user);
+
     res.status(200).json({
       status: "success",
       message: "user created successfully",
+      token: token,
     });
   } catch (err) {
     res.status(401).send(err.message);
