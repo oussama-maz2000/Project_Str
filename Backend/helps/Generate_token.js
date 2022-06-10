@@ -11,15 +11,18 @@ const generate_token = (user, res) => {
 };
 
 function refreshToken(user) {
-  var tkn;
-  jwt.sign(
-    { id: user._id, firstname: user.firstname, role: user.role, exp: 500 },
+  const token = jwt.sign(
+    { id: user._id, email: user.email, role: user.role },
     SECRET,
-    (err, token) => {
-      if (err) return err;
-      tkn = token;
+    {
+      expiresIn: 1000,
     }
   );
-  console.log(tkn);
+  return token;
 }
-module.exports = { refreshToken };
+
+async function verifyToken(token) {
+  const verify = jwt.verify(token, SECRET);
+  return verify;
+}
+module.exports = { refreshToken, verifyToken };

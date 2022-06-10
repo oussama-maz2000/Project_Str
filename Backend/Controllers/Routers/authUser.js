@@ -4,7 +4,7 @@ const {
 } = require("../../Validations/UserValidation");
 const { hashPassword, compare } = require("../../helps/Bcrypt");
 const UserModel = require("../../Model/UserSchema");
-const { refreshToken } = require("../../helps/Generate_token");
+const { refreshToken, verifyToken } = require("../../helps/Generate_token");
 async function sign(req, res) {
   try {
     let { error } = await sign_validation_user(req.body);
@@ -27,9 +27,9 @@ async function sign(req, res) {
       password: await hashPassword(req.body.password),
     });
 
-    //  await user.save();
+    await user.save();
 
-    const token =  refreshToken(user);
+    const token = refreshToken(user);
 
     res.status(200).json({
       status: "success",
@@ -63,4 +63,15 @@ async function login(req, res) {
     res.status(401).send(err.message);
   }
 }
-module.exports = { login, sign };
+
+async function test(req, res) {
+  try {
+    const verification = await verifyToken(req.query.token);
+    let user = await UserModel.findOne({ _id: verification.id }).lean();
+    console.log(user);
+    //console.log(verification);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+}
+module.exports = { login, sign, test };
